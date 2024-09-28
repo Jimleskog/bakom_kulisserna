@@ -1,6 +1,7 @@
-import 'package:bakom_kulisserna/heart.dart';
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(BakomKulissernaApp());
@@ -39,37 +40,64 @@ class FashionStorePage extends StatefulWidget {
 class _FashionStorePageState extends State<FashionStorePage>
     with SingleTickerProviderStateMixin {
   bool showReality = false;
-  late final PageController _pageController;
   late final AnimationController _animationController;
+  late final Animation<double> _flipAnimation;
+  late final PageController _bannerController;
+  Timer? _bannerTimer;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+
+    // Initialize the page flip animation
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 5),
-    )..repeat();
+      duration: const Duration(seconds: 1),
+    );
 
-    _animationController.addListener(() {
-      _pageController.animateToPage(
-        (_pageController.page! + 1).toInt() % 3,
-        duration: const Duration(seconds: 1),
-        curve: Curves.easeInOut,
-      );
-    });
+    _flipAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    ));
+
+    // Initialize banner controller and auto-scroll timer
+    _bannerController = PageController(initialPage: 0);
+    _startAutoScroll();
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
     _animationController.dispose();
+    _bannerController.dispose();
+    _bannerTimer?.cancel();
     super.dispose();
   }
 
   void toggleReality() {
+    if (showReality) {
+      _animationController.reverse();
+    } else {
+      _animationController.forward();
+    }
     setState(() {
       showReality = !showReality;
+    });
+  }
+
+  // Start a smooth, continuous auto-scroll effect
+  void _startAutoScroll() {
+    const double scrollSpeed = 2.0; // Adjust speed for smoothness
+    _bannerTimer =
+        Timer.periodic(const Duration(milliseconds: 30), (Timer timer) {
+      if (_bannerController.hasClients) {
+        _bannerController.jumpTo(_bannerController.offset + scrollSpeed);
+
+        // Loop the banner when reaching the end
+        if (_bannerController.position.pixels >=
+            _bannerController.position.maxScrollExtent) {
+          _bannerController.jumpTo(0.0);
+        }
+      }
     });
   }
 
@@ -86,7 +114,7 @@ class _FashionStorePageState extends State<FashionStorePage>
           ),
         ),
         backgroundColor: Colors.black,
-        foregroundColor: Colors.white, // Set the header text color to white
+        foregroundColor: Colors.white,
         actions: [
           IconButton(
             icon: const Icon(Icons.visibility),
@@ -95,24 +123,42 @@ class _FashionStorePageState extends State<FashionStorePage>
           ),
         ],
       ),
-      body: showReality
-          ? buildRealityView(context)
-          : buildFashionStoreView(context),
+      body: AnimatedBuilder(
+        animation: _flipAnimation,
+        builder: (context, child) {
+          return Transform(
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.001) // Perspective effect
+              ..rotateY(pi * _flipAnimation.value),
+            alignment: Alignment.center,
+            child: _flipAnimation.value < 0.5
+                ? buildFashionStoreView(context)
+                : Transform(
+                    transform: Matrix4.identity()..rotateY(pi),
+                    alignment: Alignment.center,
+                    child: buildRealityView(context),
+                  ),
+          );
+        },
+      ),
     );
   }
 
-  Widget buildFashionStoreView(BuildContext context) {
+  Widget buildFashionStoreView(
+    BuildContext context,
+  ) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildHeader(logo: 'assets/images/logo.svg'),
-          buildRollingBanner(),
+          buildHeader(logo: 'assets/images/logo.png'),
+          buildRollingBanner(fashionBannerTexts),
           buildPictureWholeScreeenWidget(
               'assets/images/pic.jpg',
               'SWEATER VIBES',
               'Mjukt, nyttigt oversize - årets skönaste trend för sommaren',
               'SHOPPA NU'),
+          buildsmallContainerBanner('Köp nu - betala senare'),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -151,18 +197,45 @@ class _FashionStorePageState extends State<FashionStorePage>
     );
   }
 
-  Widget buildRealityView(BuildContext context) {
+  Widget buildsmallContainerBanner(String text) {
+    return Container(
+      color: const Color.fromARGB(255, 70, 52, 52),
+      width: double.infinity,
+      height: 25,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            text,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.white,
+            ),
+          ),
+          Icon(
+            Icons.arrow_forward,
+            color: Colors.white,
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildRealityView(
+    BuildContext context,
+  ) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildHeader(logo: 'assets/images/logo.svg'),
-          buildRollingBanner(),
+          buildHeader(logo: 'assets/images/logo.png'),
+          buildRollingBanner(realityBannerTexts),
           buildPictureWholeScreeenWidget(
               'assets/images/pic.jpg',
               'SWEATSHOP LIVES',
               'Långa dagar, låg lön - så ser verkligheten ut bakom modeindustrin.',
               'LÄS MER'),
+          buildsmallContainerBanner('Köp nu - betala med pengar du inte har'),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -260,8 +333,8 @@ class _FashionStorePageState extends State<FashionStorePage>
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           )),
-                      const Text(
-                        'Mjukt, nyttigt oversize - årets skönaste trend för sommaren',
+                      Text(
+                        subtitleText,
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.white,
@@ -271,7 +344,7 @@ class _FashionStorePageState extends State<FashionStorePage>
                         padding: const EdgeInsets.all(15),
                         child: ElevatedButton(
                           onPressed: () {},
-                          child: const Text('SHOPPA NU'),
+                          child: Text(buttonText),
                         ),
                       )
                     ],
@@ -322,10 +395,14 @@ class _FashionStorePageState extends State<FashionStorePage>
               ),
 
               // Centered Logo
-              SvgPicture.asset(
-                logo,
-                height: 100, // Adjust logo height
+              SizedBox(
+                height: 100,
                 width: 100,
+                child: Image.asset(
+                  logo,
+                  height: 100, // Adjust logo height
+                  width: 100,
+                ),
               ),
 
               // Right-side icons: user, favorites, cart
@@ -339,15 +416,25 @@ class _FashionStorePageState extends State<FashionStorePage>
                       print("User pressed");
                     },
                   ),
-                  const SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: OverflowBox(
-                      maxWidth: double.infinity,
-                      maxHeight: double.infinity,
-                      child: HeartAnimation(),
-                    ),
-                  ),
+                  IconButton(
+                      onPressed: () {
+                        // Logic for Favorites button press
+                        print("Favorites pressed");
+                      },
+                      icon: const Icon(Icons.favorite_outline,
+                          size: 30, color: Colors.grey)),
+                  // Align(
+                  //   alignment: Alignment.center,
+                  //   child: const SizedBox(
+                  //     width: 50,
+                  //     height: 50,
+                  //     child: OverflowBox(
+                  //       maxWidth: double.infinity,
+                  //       maxHeight: double.infinity,
+                  //       child: HeartAnimation(),
+                  //     ),
+                  //   ),
+                  // ),
                   IconButton(
                     icon: const Icon(Icons.shopping_bag_outlined,
                         size: 30, color: Colors.grey),
@@ -372,21 +459,19 @@ class _FashionStorePageState extends State<FashionStorePage>
   ];
 
   final List<String> realityBannerTexts = [
-    'Sweatshops Exposed',
-    'The True Cost of Fashion',
-    'Exploitation Unveiled'
+    'BUY MORE',
+    'CARE LESS',
   ];
 
-  Widget buildRollingBanner() {
+  Widget buildRollingBanner(List<String> texts) {
     return SizedBox(
       height: 30,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        controller: _pageController,
+        controller: _bannerController,
         itemBuilder: (context, index) {
-          final text = showReality
-              ? realityBannerTexts[index % realityBannerTexts.length]
-              : fashionBannerTexts[index % fashionBannerTexts.length];
+          final text = texts[index % texts.length];
+
           return buildBannerItem(text);
         },
       ),
