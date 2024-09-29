@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'jannika/colors.dart';
+import '../jannika/colors.dart';
 
 Widget buildPage(List<Widget> children) {
   return SingleChildScrollView(
@@ -12,7 +12,7 @@ Widget buildPage(List<Widget> children) {
 }
 
 String buildAssetString(String assetString) {
-  return 'assets/images/$assetString';
+  return 'images/$assetString';
 }
 
 Widget buildsmallContainerBanner(String text) {
@@ -26,12 +26,12 @@ Widget buildsmallContainerBanner(String text) {
           text,
           style: const TextStyle(
             fontSize: 14,
-            color: Colors.white,
+            color: smallBannerTextColor,
           ),
         ),
         const Icon(
           Icons.arrow_forward,
-          color: Colors.white,
+          color: smallBannerTextColor,
         )
       ],
     ),
@@ -284,7 +284,9 @@ Widget buildCategorySection(
         Text(
           description,
           style: const TextStyle(
-              fontSize: 16, color: Colors.black54, fontWeight: FontWeight.bold),
+              fontSize: 16,
+              color: colorOnTextsWithColoredBackground,
+              fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 20),
         ElevatedButton(
@@ -292,38 +294,6 @@ Widget buildCategorySection(
             // Handle navigation to a more detailed page
           },
           child: Text(buttonText),
-        ),
-      ],
-    ),
-  );
-}
-
-Widget buildBannerSection(
-    String imagePath, String buttonText, Color buttonColor) {
-  return Container(
-    margin: const EdgeInsets.symmetric(vertical: 20),
-    child: Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        Image.asset(imagePath,
-            fit: BoxFit.cover, width: double.infinity, height: 200),
-        Positioned(
-          bottom: 0,
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(10),
-            color: buttonColor.withOpacity(0.8),
-            child: Center(
-              child: Text(
-                buttonText,
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
         ),
       ],
     ),

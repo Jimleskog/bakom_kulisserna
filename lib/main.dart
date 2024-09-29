@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'jannika/fonts.dart';
 import 'pages/bakom_kulisserna.dart';
 
 void main() {
@@ -15,6 +16,8 @@ class BakomKulissernaApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const BakomKulissernaMainPage(),
       theme: ThemeData(
+        fontFamily: fontFamily,
+        textTheme: const TextTheme(),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(

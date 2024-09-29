@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../jannika/fashionwidgets.dart';
 import '../jannika/realitywidgets.dart';
-import '../widgets.dart';
+import '../widgets/widgets.dart';
 
 class BakomKulissernaMainPage extends StatefulWidget {
   const BakomKulissernaMainPage({super.key});
