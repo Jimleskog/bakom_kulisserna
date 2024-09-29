@@ -15,7 +15,7 @@ List<Widget> fashionWidgets(ScrollController controller) {
     buildPictureWholeScreeenWidget(
         buildAssetString('pic.jpg'),
         'SWEATER VIBES',
-        'Mjukt, nyttigt oversize - årets skönaste trend för sommaren',
+        'Mjukt, nyttigt oversize - årets skönaste trend för sommaren test',
         'SHOPPA NU'),
     buildsmallContainerBanner('Köp nu - betala senare'),
     Padding(
