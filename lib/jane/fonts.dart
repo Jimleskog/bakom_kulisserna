@@ -12,6 +12,6 @@ import 'package:google_fonts/google_fonts.dart';
 // GoogleFonts.notoSans(),
 // GoogleFonts.ptSans(),
 // GoogleFonts.merriweather(),
-final TextStyle appsTextStyle = GoogleFonts.merriweather(letterSpacing: 20);
+final TextStyle appsTextStyle = GoogleFonts.merriweather();
 
 final String? fontFamily = appsTextStyle.fontFamily;
