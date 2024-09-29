@@ -34,7 +34,7 @@ class BakomKulissernaMainPageState extends State<BakomKulissernaMainPage>
 
     _flipAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
       parent: _animationController,
-      curve: Curves.easeInOut,
+      curve: Curves.easeInOutBack,
     ));
 
     // Initialize banner controller and auto-scroll timer
