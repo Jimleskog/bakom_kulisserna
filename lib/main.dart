@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'jane/fonts.dart';
+import 'jannika/fonts.dart';
 import 'pages/bakom_kulisserna.dart';
 
 void main() {
