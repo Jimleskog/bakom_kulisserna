@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../jannika/colors.dart';
+import '../jane/colors.dart';
 
 Widget buildPage(List<Widget> children) {
   return SingleChildScrollView(

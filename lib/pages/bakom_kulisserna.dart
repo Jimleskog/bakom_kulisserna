@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../jannika/fashionwidgets.dart';
-import '../jannika/realitywidgets.dart';
+import '../jane/fashionwidgets.dart';
+import '../jane/realitywidgets.dart';
 import '../widgets/widgets.dart';
 
 class BakomKulissernaMainPage extends StatefulWidget {
