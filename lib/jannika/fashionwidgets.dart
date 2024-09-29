@@ -14,7 +14,7 @@ List<Widget> fashionWidgets(ScrollController controller) {
     buildRollingBanner(fashionBannerTexts, controller),
     buildPictureWholeScreeenWidget(
         buildAssetString('pic.jpg'),
-        'SWEATER VIBES',
+        'SWEATER VIBESSSS',
         'Mjukt, nyttigt oversize - årets skönaste trend för sommaren',
         'SHOPPA NU'),
     buildsmallContainerBanner('Köp nu - betala senare'),
