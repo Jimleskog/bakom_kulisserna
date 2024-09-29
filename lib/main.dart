@@ -4,19 +4,25 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(BakomKulissernaApp());
+  runApp(const BakomKulissernaApp());
 }
 
 const Color flashColor = Color.fromARGB(255, 108, 255, 221);
 
 class BakomKulissernaApp extends StatelessWidget {
+  const BakomKulissernaApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: FashionStorePage(),
       theme: ThemeData(
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+            ),
             backgroundColor: Colors.white, // Background color
             foregroundColor: Colors.black, // Text color
             textStyle: const TextStyle(
@@ -52,7 +58,7 @@ class _FashionStorePageState extends State<FashionStorePage>
     // Initialize the page flip animation
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 2),
     );
 
     _flipAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -171,8 +177,8 @@ class _FashionStorePageState extends State<FashionStorePage>
               ],
             ),
           ),
-          buildCategorySection(
-              context, 'SUPER SALE', 'Passa på 50 - 70% rabatt på allt.'),
+          buildCategorySection(context, 'SUPER SALE',
+              'Passa på 50 - 70% rabatt på allt.', 'SHOPPA REA'),
           const SizedBox(height: 16),
           buildPictureWholeScreeenWidget(
               'assets/images/pic.jpg',
@@ -197,6 +203,59 @@ class _FashionStorePageState extends State<FashionStorePage>
     );
   }
 
+  Widget buildRealityView(
+    BuildContext context,
+  ) {
+    String darkPic = 'assets/images/dark.jpg';
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildHeader(logo: 'assets/images/logo.png'),
+          buildRollingBanner(realityBannerTexts),
+          buildPictureWholeScreeenWidget(
+              darkPic,
+              'SWEATSHOP LIVES',
+              'Långa dagar, låg lön - så ser verkligheten ut bakom modeindustrin.',
+              'LÄS MER'),
+          buildsmallContainerBanner('Köp nu - betala med pengar du inte har'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                buildPictureWithButton(darkPic, 'FALSKA IDEAL'),
+                buildPictureWithButton(darkPic, 'INFLUENCER CULTURE'),
+                buildPictureWithButton(darkPic, 'BILLIGA MATERIAL'),
+              ],
+            ),
+          ),
+          buildCategorySection(
+              context,
+              'SUPER FAIL',
+              'Vad är egentligen REA? Och vem betalar priset för låga priser?',
+              'LÄS OM REA'),
+          const SizedBox(height: 16),
+          buildPictureWholeScreeenWidget(darkPic, 'GREENWASHING',
+              'Hur hållbart är det egentligen?', 'SE HELA SANNINGEN'),
+          const SizedBox(height: 16),
+          buildSubscriptionSection(
+            headerText: 'Verkligheten bakom modeindustrin',
+            descriptionText:
+                'Få insikter om de verkliga förhållandena i modeindustrin - prenumerera på vårt nyhetsbrev.',
+            buttonText: 'PRENUMERERA',
+            shopSectionHeader: 'Verklighet',
+            shopLinks: ['Arbetsförhållanden', 'Miljöpåverkan', 'Etik'],
+            aboutSectionHeader: 'Om oss',
+            aboutLinks: ['Vår historia', 'Vårt uppdrag', 'Våra värderingar'],
+            legalSectionHeader: 'Legal',
+            legalLinks: ['Cookies', 'Integritetspolicy', 'Kontakta oss'],
+          )
+        ],
+      ),
+    );
+  }
+
   Widget buildsmallContainerBanner(String text) {
     return Container(
       color: const Color.fromARGB(255, 70, 52, 52),
@@ -212,62 +271,9 @@ class _FashionStorePageState extends State<FashionStorePage>
               color: Colors.white,
             ),
           ),
-          Icon(
+          const Icon(
             Icons.arrow_forward,
             color: Colors.white,
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget buildRealityView(
-    BuildContext context,
-  ) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildHeader(logo: 'assets/images/logo.png'),
-          buildRollingBanner(realityBannerTexts),
-          buildPictureWholeScreeenWidget(
-              'assets/images/pic.jpg',
-              'SWEATSHOP LIVES',
-              'Långa dagar, låg lön - så ser verkligheten ut bakom modeindustrin.',
-              'LÄS MER'),
-          buildsmallContainerBanner('Köp nu - betala med pengar du inte har'),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                buildPictureWithButton('assets/images/pic.jpg', 'Beauty'),
-                buildPictureWithButton(
-                    'assets/images/pic.jpg', 'CNSQNS x Liza'),
-                buildPictureWithButton('assets/images/pic.jpg', 'STICKAT'),
-              ],
-            ),
-          ),
-          buildCategorySection(context, 'Influencers',
-              'De döljer verkligheten bakom sponsrade inlägg.'),
-          const SizedBox(height: 16),
-          buildPictureWholeScreeenWidget(
-              'assets/images/pic.jpg',
-              'GREENWASHING',
-              'Hur hållbart är det egentligen?',
-              'SE HELA SANNINGEN'),
-          const SizedBox(height: 16),
-          buildSubscriptionSection(
-            headerText: 'Verkligheten bakom modeindustrin',
-            descriptionText:
-                'Få insikter om de verkliga förhållandena i modeindustrin - prenumerera på vårt nyhetsbrev.',
-            buttonText: 'PRENUMERERA',
-            shopSectionHeader: 'Verklighet',
-            shopLinks: ['Arbetsförhållanden', 'Miljöpåverkan', 'Etik'],
-            aboutSectionHeader: 'Om oss',
-            aboutLinks: ['Vår historia', 'Vårt uppdrag', 'Våra värderingar'],
-            legalSectionHeader: 'Legal',
-            legalLinks: ['Cookies', 'Integritetspolicy', 'Kontakta oss'],
           )
         ],
       ),
@@ -292,12 +298,16 @@ class _FashionStorePageState extends State<FashionStorePage>
               bottom: 10,
               left: 0,
               right: 0,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(buttonText),
-                  style: ElevatedButton.styleFrom(),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(),
+                    child: FittedBox(
+                        fit: BoxFit.fitWidth, child: Text(buttonText)),
+                  ),
                 ),
               ),
             ),
@@ -320,24 +330,36 @@ class _FashionStorePageState extends State<FashionStorePage>
                 Positioned.fill(
                   child: Image.asset(
                     assetString,
-                    fit: BoxFit.fitWidth,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(titleText,
-                          style: const TextStyle(
-                            fontSize: 50,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          )),
-                      Text(
-                        subtitleText,
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text(titleText,
+                              style: const TextStyle(
+                                fontSize: 50,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text(
+                            subtitleText,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                       Padding(
@@ -361,93 +383,91 @@ class _FashionStorePageState extends State<FashionStorePage>
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-      child: Stack(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          bool isSmallScreen = constraints.maxWidth < 600;
+          return Stack(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Menu Icon
-                  IconButton(
-                    icon: const Icon(Icons.menu, size: 30, color: Colors.black),
-                    onPressed: () {
-                      // Logic for Menu button press
-                      print("Menu pressed");
-                    },
+                  Row(
+                    children: [
+                      // Menu Icon
+                      IconButton(
+                        icon: const Icon(Icons.menu,
+                            size: 30, color: Colors.black),
+                        onPressed: () {
+                          // Logic for Menu button press
+                          print("Menu pressed");
+                        },
+                      ),
+                      if (!isSmallScreen) ...[
+                        const SizedBox(width: 10),
+                        // Search Icon and Text
+                        IconButton(
+                          icon: const Icon(Icons.search,
+                              size: 30, color: Colors.black),
+                          onPressed: () {
+                            // Logic for Search button press
+                            print("Search pressed");
+                          },
+                        ),
+                        const Text(
+                          'Sök produkter',
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        ),
+                      ],
+                    ],
                   ),
-                  const SizedBox(width: 10),
 
-                  // Search Icon and Text
-                  IconButton(
-                    icon:
-                        const Icon(Icons.search, size: 30, color: Colors.black),
-                    onPressed: () {
-                      // Logic for Search button press
-                      print("Search pressed");
-                    },
+                  // Centered Logo
+                  SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: Image.asset(
+                      logo,
+                      height: 100, // Adjust logo height
+                      width: 100,
+                    ),
                   ),
-                  const Text(
-                    'Sök produkter',
-                    style: TextStyle(fontSize: 16, color: Colors.black),
-                  ),
-                ],
-              ),
 
-              // Centered Logo
-              SizedBox(
-                height: 100,
-                width: 100,
-                child: Image.asset(
-                  logo,
-                  height: 100, // Adjust logo height
-                  width: 100,
-                ),
-              ),
-
-              // Right-side icons: user, favorites, cart
-              Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.person_outline,
-                        size: 30, color: Colors.grey),
-                    onPressed: () {
-                      // Logic for User button press
-                      print("User pressed");
-                    },
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        // Logic for Favorites button press
-                        print("Favorites pressed");
-                      },
-                      icon: const Icon(Icons.favorite_outline,
-                          size: 30, color: Colors.grey)),
-                  // Align(
-                  //   alignment: Alignment.center,
-                  //   child: const SizedBox(
-                  //     width: 50,
-                  //     height: 50,
-                  //     child: OverflowBox(
-                  //       maxWidth: double.infinity,
-                  //       maxHeight: double.infinity,
-                  //       child: HeartAnimation(),
-                  //     ),
-                  //   ),
-                  // ),
-                  IconButton(
-                    icon: const Icon(Icons.shopping_bag_outlined,
-                        size: 30, color: Colors.grey),
-                    onPressed: () {
-                      // Logic for Cart button press
-                      print("Cart pressed");
-                    },
+                  // Right-side icons: user, favorites, cart
+                  Row(
+                    children: [
+                      if (!isSmallScreen) ...[
+                        IconButton(
+                          icon: const Icon(Icons.person_outline,
+                              size: 30, color: Colors.grey),
+                          onPressed: () {
+                            // Logic for User button press
+                            print("User pressed");
+                          },
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            // Logic for Favorites button press
+                            print("Favorites pressed");
+                          },
+                          icon: const Icon(Icons.favorite_outline,
+                              size: 30, color: Colors.grey),
+                        ),
+                      ],
+                      IconButton(
+                        icon: const Icon(Icons.shopping_bag_outlined,
+                            size: 30, color: Colors.grey),
+                        onPressed: () {
+                          // Logic for Cart button press
+                          print("Cart pressed");
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
             ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }
@@ -496,8 +516,8 @@ class _FashionStorePageState extends State<FashionStorePage>
     );
   }
 
-  Widget buildCategorySection(
-      BuildContext context, String title, String description) {
+  Widget buildCategorySection(BuildContext context, String title,
+      String description, String buttonText) {
     return Container(
       width: double.infinity,
       color: flashColor,
@@ -526,7 +546,7 @@ class _FashionStorePageState extends State<FashionStorePage>
             onPressed: () {
               // Handle navigation to a more detailed page
             },
-            child: const Text('SHOPPA REA'),
+            child: Text(buttonText),
           ),
         ],
       ),
@@ -577,84 +597,98 @@ Widget buildSubscriptionSection({
   required String legalSectionHeader,
   required List<String> legalLinks,
 }) {
-  return Container(
-    color: const Color.fromARGB(255, 202, 190, 186),
-    child: Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 40),
-            // Subscription Banner
-            Text(
-              headerText,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+  return LayoutBuilder(builder: (context, constraints) {
+    final screenwidth = constraints.maxWidth;
+    return Container(
+      color: const Color.fromARGB(255, 202, 190, 186),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 40),
+              // Subscription Banner
+              Text(
+                headerText,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              descriptionText,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.black,
+              const SizedBox(height: 10),
+              Text(
+                descriptionText,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                buttonText,
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text(
+                  buttonText,
+                ),
               ),
-            ),
-            const SizedBox(height: 40),
+              const SizedBox(height: 40),
 
-            // Sections for Shop, About Us, Legal
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildSection(shopSectionHeader, shopLinks),
-                _buildSection(aboutSectionHeader, aboutLinks),
-                _buildSection(legalSectionHeader, legalLinks),
-              ],
-            ),
-            const SizedBox(height: 40),
+              // Sections for Shop, About Us, Legal
+              if (screenwidth < 450)
+                Column(
+                  children: [
+                    _buildSection(shopSectionHeader, shopLinks),
+                    const SizedBox(height: 20),
+                    _buildSection(aboutSectionHeader, aboutLinks),
+                    const SizedBox(height: 20),
+                    _buildSection(legalSectionHeader, legalLinks),
+                  ],
+                )
+              else
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildSection(shopSectionHeader, shopLinks),
+                    _buildSection(aboutSectionHeader, aboutLinks),
+                    _buildSection(legalSectionHeader, legalLinks),
+                  ],
+                ),
+              const SizedBox(height: 40),
 
-            // Social Media Icons (Placeholders)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.facebook, color: Colors.black),
-                  onPressed: () {},
-                ),
-                const SizedBox(width: 10),
-                IconButton(
-                  icon: const Icon(Icons.picture_as_pdf, color: Colors.black),
-                  onPressed: () {},
-                ),
-                const SizedBox(width: 10),
-                IconButton(
-                  icon: const Icon(Icons.music_note, color: Colors.black),
-                  onPressed: () {},
-                ),
-                const SizedBox(width: 10),
-                IconButton(
-                  icon: const Icon(Icons.linked_camera, color: Colors.black),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ],
+              // Social Media Icons (Placeholders)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.facebook, color: Colors.black),
+                    onPressed: () {},
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    icon: const Icon(Icons.picture_as_pdf, color: Colors.black),
+                    onPressed: () {},
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    icon: const Icon(Icons.music_note, color: Colors.black),
+                    onPressed: () {},
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    icon: const Icon(Icons.linked_camera, color: Colors.black),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+  });
 }
 
 Widget _buildSection(String sectionHeader, List<String> sectionLinks) {
@@ -671,22 +705,16 @@ Widget _buildSection(String sectionHeader, List<String> sectionLinks) {
       ),
       const SizedBox(height: 10),
       for (String link in sectionLinks)
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () {
-              // Handle link tap
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: Text(
-                link,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
+        TextButton(
+          onPressed: () {
+            // Handle link tap
+          },
+          child: Text(
+            link,
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+              decoration: TextDecoration.underline,
             ),
           ),
         ),
