@@ -157,10 +157,10 @@ class _FashionStorePageState extends State<FashionStorePage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildHeader(logo: 'assets/images/logo.png'),
+          buildHeader(logo: buildAssetString('logo.png')),
           buildRollingBanner(fashionBannerTexts),
           buildPictureWholeScreeenWidget(
-              'assets/images/pic.jpg',
+              buildAssetString('pic.jpg'),
               'SWEATER VIBES',
               'Mjukt, nyttigt oversize - årets skönaste trend för sommaren',
               'SHOPPA NU'),
@@ -170,18 +170,18 @@ class _FashionStorePageState extends State<FashionStorePage>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                buildPictureWithButton('assets/images/pic.jpg', 'BEAUTY'),
+                buildPictureWithButton(buildAssetString('pic.jpg'), 'BEAUTY'),
                 buildPictureWithButton(
-                    'assets/images/pic.jpg', 'CNSQNS x Liza'),
-                buildPictureWithButton('assets/images/pic.jpg', 'STICKAT'),
+                    buildAssetString('pic.jpg'), 'CNSQNS x Liza'),
+                buildPictureWithButton(buildAssetString('pic.jpg'), 'STICKAT'),
               ],
             ),
           ),
-          buildCategorySection(context, 'SUPER SALE',
-              'Passa på 50 - 70% rabatt på allt.', 'SHOPPA REA'),
+          buildCategorySection(
+              'SUPER SALE', 'Passa på 50 - 70% rabatt på allt.', 'SHOPPA REA'),
           const SizedBox(height: 16),
           buildPictureWholeScreeenWidget(
-              'assets/images/pic.jpg',
+              buildAssetString('pic.jpg'),
               'RECYCLED',
               'Vår planet, vårt ansvar. Återvunna fibrer och skarba siluetter.',
               'SHOPPA NU'),
@@ -203,18 +203,21 @@ class _FashionStorePageState extends State<FashionStorePage>
     );
   }
 
+  String buildAssetString(String assetString) {
+    return 'assets/images/$assetString';
+  }
+
   Widget buildRealityView(
     BuildContext context,
   ) {
-    String darkPic = 'assets/images/dark.jpg';
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildHeader(logo: 'assets/images/logo.png'),
+          buildHeader(logo: buildAssetString('logo.png')),
           buildRollingBanner(realityBannerTexts),
           buildPictureWholeScreeenWidget(
-              darkPic,
+              buildAssetString('dark.jpg'),
               'SWEATSHOP LIVES',
               'Långa dagar, låg lön - så ser verkligheten ut bakom modeindustrin.',
               'LÄS MER'),
@@ -224,20 +227,25 @@ class _FashionStorePageState extends State<FashionStorePage>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                buildPictureWithButton(darkPic, 'FALSKA IDEAL'),
-                buildPictureWithButton(darkPic, 'INFLUENCER CULTURE'),
-                buildPictureWithButton(darkPic, 'BILLIGA MATERIAL'),
+                buildPictureWithButton(
+                    buildAssetString('dark.jpg'), 'FALSKA IDEAL'),
+                buildPictureWithButton(
+                    buildAssetString('dark.jpg'), 'INFLUENCER CULTURE'),
+                buildPictureWithButton(
+                    buildAssetString('dark.jpg'), 'BILLIGA MATERIAL'),
               ],
             ),
           ),
           buildCategorySection(
-              context,
               'SUPER FAIL',
               'Vad är egentligen REA? Och vem betalar priset för låga priser?',
               'LÄS OM REA'),
           const SizedBox(height: 16),
-          buildPictureWholeScreeenWidget(darkPic, 'GREENWASHING',
-              'Hur hållbart är det egentligen?', 'SE HELA SANNINGEN'),
+          buildPictureWholeScreeenWidget(
+              buildAssetString('dark.jpg'),
+              'GREENWASHING',
+              'Hur hållbart är det egentligen?',
+              'SE HELA SANNINGEN'),
           const SizedBox(height: 16),
           buildSubscriptionSection(
             headerText: 'Verkligheten bakom modeindustrin',
@@ -516,8 +524,8 @@ class _FashionStorePageState extends State<FashionStorePage>
     );
   }
 
-  Widget buildCategorySection(BuildContext context, String title,
-      String description, String buttonText) {
+  Widget buildCategorySection(
+      String title, String description, String buttonText) {
     return Container(
       width: double.infinity,
       color: flashColor,
