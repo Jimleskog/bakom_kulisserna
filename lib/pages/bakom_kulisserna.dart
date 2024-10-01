@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../jane/fashionwidgets.dart';
@@ -39,6 +40,8 @@ class BakomKulissernaMainPageState extends State<BakomKulissernaMainPage>
 
     // Initialize banner controller and auto-scroll timer
     _bannerController = PageController(initialPage: 0);
+    // Removed invalid line
+
     _startAutoScroll();
   }
 
@@ -62,20 +65,32 @@ class BakomKulissernaMainPageState extends State<BakomKulissernaMainPage>
   }
 
   // Start a smooth, continuous auto-scroll effect
-  void _startAutoScroll() {
-    const double scrollSpeed = 2.0; // Adjust speed for smoothness
-    _bannerTimer =
-        Timer.periodic(const Duration(milliseconds: 30), (Timer timer) {
+  void _startAutoScroll() async {
+    const double scrollSpeed = 1000; // Adjust speed for smoothness
+    const Duration scrollDuration =
+        Duration(seconds: 20); // Adjust duration for scroll speed
+    // _bannerTimer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+    while (true) {
+      debugPrint('looop call');
       if (_bannerController.hasClients) {
-        _bannerController.jumpTo(_bannerController.offset + scrollSpeed);
+        debugPrint('Scrolling banner');
+        await _bannerController.animateTo(
+          _bannerController.offset + scrollSpeed,
+          duration: scrollDuration,
+          curve: Curves.linear,
+        );
 
         // Loop the banner when reaching the end
         if (_bannerController.position.pixels >=
             _bannerController.position.maxScrollExtent) {
           _bannerController.jumpTo(0.0);
         }
+      } else {
+        debugPrint('Banner controller not ready');
+        await Future.delayed(const Duration(milliseconds: 100));
       }
-    });
+    }
+    // });
   }
 
   @override
