@@ -12,7 +12,7 @@ List<Widget> buildRealityWidgets(ScrollController controller) {
     buildHeader(logo: buildAssetString('logo.png')),
     buildRollingBanner(realityBannerTexts, controller),
     buildPictureWholeScreeenWidget(
-        buildAssetString('dark.jpg'),
+        buildAssetString('dark1.png'),
         'SWEATSHOP LIVES',
         'Långa dagar, låg lön - så ser verkligheten ut bakom modeindustrin.',
         'LÄS MER'),
@@ -24,7 +24,7 @@ List<Widget> buildRealityWidgets(ScrollController controller) {
         children: [
           buildPictureWithButton(buildAssetString('dark.jpg'), 'FALSKA IDEAL'),
           buildPictureWithButton(
-              buildAssetString('dark.jpg'), 'INFLUENCER CULTURE'),
+              buildAssetString('made_this.png'), 'INFLUENCER CULTURE'),
           buildPictureWithButton(
               buildAssetString('dark.jpg'), 'BILLIGA MATERIAL'),
         ],
@@ -35,8 +35,8 @@ List<Widget> buildRealityWidgets(ScrollController controller) {
         'Vad är egentligen REA? Och vem betalar priset för låga priser?',
         'LÄS OM REA'),
     const SizedBox(height: 16),
-    buildPictureWholeScreeenWidget(buildAssetString('dark.jpg'), 'GREENWASHING',
-        'Hur hållbart är det egentligen?', 'SE HELA SANNINGEN'),
+    buildPictureWholeScreeenWidget(buildAssetString('made_this.png'),
+        'GREENWASHING', 'Hur hållbart är det egentligen?', 'SE HELA SANNINGEN'),
     const SizedBox(height: 16),
     buildSubscriptionSection(
       headerText: 'Verkligheten bakom modeindustrin',
