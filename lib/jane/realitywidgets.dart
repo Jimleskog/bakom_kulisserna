@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../main.dart';
 import '../widgets/widgets.dart';
+import 'colors.dart';
 
 final List<String> realityBannerTexts = [
   'BUY MORE',
   'CARE LESS',
 ];
 
-List<Widget> buildRealityWidgets(ScrollController controller) {
+List<Widget> buildRealityWidgets(
+    ScrollController controller, BuildContext context) {
   return [
     buildHeader(logo: buildAssetString('logo.png')),
     buildRollingBanner(realityBannerTexts, controller),
@@ -19,16 +22,13 @@ List<Widget> buildRealityWidgets(ScrollController controller) {
     buildsmallContainerBanner('Köp nu - betala med pengar du inte har'),
     Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          buildPictureWithButton(buildAssetString('dark.jpg'), 'FALSKA IDEAL'),
-          buildPictureWithButton(
-              buildAssetString('made_this.png'), 'INFLUENCER CULTURE'),
-          buildPictureWithButton(
-              buildAssetString('dark.jpg'), 'BILLIGA MATERIAL'),
-        ],
-      ),
+      child: MediaQuery.of(context).size.width < desktopToMobileWidth
+          ? Wrap(
+              children: _smallPictureRow(),
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: _smallPictureRow()),
     ),
     buildCategorySection(
         'SUPER FAIL',
@@ -50,5 +50,14 @@ List<Widget> buildRealityWidgets(ScrollController controller) {
       legalSectionHeader: 'Legal',
       legalLinks: ['Cookies', 'Integritetspolicy', 'Kontakta oss'],
     )
+  ];
+}
+
+List<Widget> _smallPictureRow() {
+  return [
+    buildPictureWithButton(buildAssetString('dark.jpg'), 'FALSKA IDEAL'),
+    buildPictureWithButton(
+        buildAssetString('made_this.png'), 'INFLUENCER CULTURE'),
+    buildPictureWithButton(buildAssetString('dark.jpg'), 'BILLIGA MATERIAL'),
   ];
 }

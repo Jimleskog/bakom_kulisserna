@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../main.dart';
 import '../widgets/widgets.dart';
+import 'colors.dart';
 
 final List<String> fashionBannerTexts = [
   'Super Sale',
@@ -8,7 +10,7 @@ final List<String> fashionBannerTexts = [
   'Limited Time Offer: Buy 1 Get 1 Free'
 ];
 
-List<Widget> fashionWidgets(ScrollController controller) {
+List<Widget> fashionWidgets(ScrollController controller, BuildContext context) {
   return [
     buildHeader(logo: buildAssetString('logo.png')),
     buildRollingBanner(fashionBannerTexts, controller),
@@ -20,14 +22,11 @@ List<Widget> fashionWidgets(ScrollController controller) {
     buildsmallContainerBanner('Köp nu - betala senare'),
     Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          buildPictureWithButton(buildAssetString('pic.jpg'), 'BEAUTY'),
-          buildPictureWithButton(buildAssetString('pic.jpg'), 'CNSQNS x Liza'),
-          buildPictureWithButton(buildAssetString('pic.jpg'), 'STICKAT'),
-        ],
-      ),
+      child: MediaQuery.of(context).size.width < desktopToMobileWidth
+          ? Wrap(children: _smallPictureRow())
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: _smallPictureRow()),
     ),
     buildCategorySection(
         'SUPER SALE', 'Passa på 50 - 70% rabatt på allt.', 'SHOPPA REA'),
@@ -50,5 +49,13 @@ List<Widget> fashionWidgets(ScrollController controller) {
       legalSectionHeader: 'Legal',
       legalLinks: ['Cookies', 'Integritetspolicy', 'Kontakta oss'],
     )
+  ];
+}
+
+List<Widget> _smallPictureRow() {
+  return [
+    buildPictureWithButton(buildAssetString('pic.jpg'), 'BEAUTY'),
+    buildPictureWithButton(buildAssetString('influencer.jpg'), 'CNSQNS x Liza'),
+    buildPictureWithButton(buildAssetString('pic.jpg'), 'STICKAT'),
   ];
 }

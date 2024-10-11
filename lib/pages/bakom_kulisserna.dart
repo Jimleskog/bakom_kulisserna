@@ -124,12 +124,12 @@ class BakomKulissernaMainPageState extends State<BakomKulissernaMainPage>
               ..rotateY(pi * _flipAnimation.value),
             alignment: Alignment.center,
             child: _flipAnimation.value < 0.5
-                ? buildPage(fashionWidgets(_bannerController))
+                ? buildPage(fashionWidgets(_bannerController, context))
                 : Transform(
                     transform: Matrix4.identity()..rotateY(pi),
                     alignment: Alignment.center,
                     child: buildPage(
-                      buildRealityWidgets(_bannerController),
+                      buildRealityWidgets(_bannerController, context),
                     )),
           );
         },
