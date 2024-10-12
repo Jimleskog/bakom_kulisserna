@@ -39,39 +39,63 @@ Widget buildsmallContainerBanner(String text) {
 }
 
 Widget buildPictureWithButton(String imagePath, String buttonText) {
-  return Expanded(
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Stack(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            height: 300,
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.cover,
-            ),
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Stack(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: 300,
+          child: Image.asset(
+            imagePath,
+            fit: BoxFit.cover,
           ),
-          Positioned(
-            bottom: 10,
-            left: 0,
-            right: 0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(),
-                  child:
-                      FittedBox(fit: BoxFit.fitWidth, child: Text(buttonText)),
-                ),
+        ),
+        Positioned(
+          bottom: 10,
+          left: 0,
+          right: 0,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(),
+                child: FittedBox(fit: BoxFit.fitWidth, child: Text(buttonText)),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     ),
+  );
+}
+
+class PictureData {
+  final String picture;
+  final String button;
+
+  PictureData({required this.picture, required this.button});
+}
+
+List<Widget> _smallPictureRow(
+    {required List<PictureData> data, bool expand = false}) {
+  return data.map((data) {
+    final widget =
+        buildPictureWithButton(buildAssetString(data.picture), data.button);
+    return expand ? Expanded(child: widget) : widget;
+  }).toList();
+}
+
+Widget buildPictureRow(BuildContext context, List<PictureData> data) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: MediaQuery.of(context).size.width < desktopToMobileWidth
+        ? Wrap(children: _smallPictureRow(data: data))
+        : Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: _smallPictureRow(data: data, expand: true)),
   );
 }
 
