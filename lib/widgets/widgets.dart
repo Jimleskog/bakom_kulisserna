@@ -45,7 +45,7 @@ Widget buildPictureWithButton(String imagePath, String buttonText) {
       children: [
         SizedBox(
           width: double.infinity,
-          height: 300,
+          height: 624,
           child: Image.asset(
             imagePath,
             fit: BoxFit.cover,
@@ -105,7 +105,7 @@ Widget buildPictureWholeScreeenWidget(String assetString, String titleText,
     children: [
       SizedBox(
           width: double.infinity,
-          height: 300,
+          height: 700,
           // color: Colors.grey,
           child: Stack(
             children: [
@@ -127,7 +127,7 @@ Widget buildPictureWholeScreeenWidget(String assetString, String titleText,
                             style: const TextStyle(
                               fontSize: 50,
                               color: colorOnPictureTexts,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w800,
                             )),
                       ),
                     ),

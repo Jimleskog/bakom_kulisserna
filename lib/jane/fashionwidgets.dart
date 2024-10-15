@@ -4,27 +4,25 @@ import '../widgets/widgets.dart';
 List<Widget> fashionWidgets(ScrollController controller, BuildContext context) {
   return [
     buildHeader(logo: buildAssetString('logo.png')),
-    buildRollingBanner(
-        ['Super Sale', '50-70% Off', 'Limited Time Offer: Buy 1 Get 1 Free'],
-        controller),
+    buildRollingBanner(['SUPER SALE', '50-70%'], controller),
     buildPictureWholeScreeenWidget(
-        buildAssetString('sweater vibes 2.jpg'),
+        buildAssetString('sweater vibes 2.png'),
         'SWEATER VIBES',
-        'Mjukt, nyttigt oversize - årets skönaste trend för sommaren',
+        'Mjukt, fluffigt och oversize - årets skönaste trend är här',
         'SHOPPA NU'),
     buildsmallContainerBanner('Köp nu - betala senare'),
     buildPictureRow(context, [
-      PictureData(picture: 'pic.jpg', button: 'BEAUTY'),
-      PictureData(picture: 'influencer.jpg', button: 'CNSQNS x Liza'),
-      PictureData(picture: 'pic.jpg', button: 'STICKAT'),
+      PictureData(picture: 'Beauty 3.png', button: 'BEAUTY'),
+      PictureData(picture: 'liza.png', button: 'CNSQNS x Liza'),
+      PictureData(picture: 'stickat.png', button: 'STICKAT'),
     ]),
     buildCategorySection(
-        'SUPER SALE', 'Passa på 50 - 70% rabatt på allt.', 'SHOPPA REA'),
+        'SUPER SALE', 'Passa på: 50-70% på allt!', 'SHOPPA REA'),
     const SizedBox(height: 16),
     buildPictureWholeScreeenWidget(
-        buildAssetString('pic.jpg'),
+        buildAssetString('recycled.png'),
         'RECYCLED',
-        'Vår planet, vårt ansvar. Återvunna fibrer och skarba siluetter.',
+        'Vår planet, vårt ansvar. Återvunna fibrer och skarpa siluetter.',
         'SHOPPA NU'),
     const SizedBox(height: 16),
     buildSubscriptionSection(
