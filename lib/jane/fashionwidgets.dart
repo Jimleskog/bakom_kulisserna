@@ -8,7 +8,7 @@ List<Widget> fashionWidgets(ScrollController controller, BuildContext context) {
         ['Super Sale', '50-70% Off', 'Limited Time Offer: Buy 1 Get 1 Free'],
         controller),
     buildPictureWholeScreeenWidget(
-        buildAssetString('pic.jpg'),
+        buildAssetString('sweater vibes 2.jpg'),
         'SWEATER VIBES',
         'Mjukt, nyttigt oversize - årets skönaste trend för sommaren',
         'SHOPPA NU'),
