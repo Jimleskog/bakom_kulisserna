@@ -20,17 +20,12 @@ String buildAssetString(String assetString) {
 Widget buildsmallContainerBanner(String text) {
   return Container(
     color: smallBannerColor,
-    height: 25,
+    height: 30,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          text,
-          style: const TextStyle(
-            fontSize: 14,
-            color: smallBannerTextColor,
-          ),
-        ),
+        Text(text,
+            style: AppFont.bannerTexts.copyWith(color: smallBannerTextColor)),
         const Icon(
           Icons.arrow_forward,
           color: smallBannerTextColor,
@@ -157,9 +152,7 @@ Widget buildPictureWholeScreeenWidget(String assetString, String titleText,
   );
 }
 
-Widget buildHeader({
-  required String logo,
-}) {
+Widget buildHeader({required String logo, required String searchString}) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
     child: LayoutBuilder(
@@ -201,7 +194,7 @@ Widget buildHeader({
                                 },
                               ),
                               Text(
-                                'Sök produkter',
+                                searchString,
                                 style: AppFont.footerBody,
                               ),
                             ],
@@ -213,8 +206,8 @@ Widget buildHeader({
                                 width: 200,
                                 child: TextField(
                                   controller: searchController,
-                                  decoration: const InputDecoration(
-                                    hintText: 'Sök produkter',
+                                  decoration: InputDecoration(
+                                    hintText: searchString,
                                   ),
                                 ),
                               ),

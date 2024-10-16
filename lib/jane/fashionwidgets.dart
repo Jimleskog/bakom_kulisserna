@@ -3,7 +3,8 @@ import '../widgets/widgets.dart';
 
 List<Widget> fashionWidgets(ScrollController controller, BuildContext context) {
   return [
-    buildHeader(logo: buildAssetString('logo.png')),
+    buildHeader(
+        logo: buildAssetString('logo.png'), searchString: 'Sök produkter'),
     buildRollingBanner(['SUPER SALE', '50-70%'], controller),
     buildPictureWholeScreeenWidget(
         buildAssetString('sweater vibes 2.png'),

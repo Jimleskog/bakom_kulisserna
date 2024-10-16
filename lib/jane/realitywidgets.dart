@@ -4,7 +4,7 @@ import '../widgets/widgets.dart';
 List<Widget> buildRealityWidgets(
     ScrollController controller, BuildContext context) {
   return [
-    buildHeader(logo: buildAssetString('logo.png')),
+    buildHeader(logo: buildAssetString('logo.png'), searchString: 'Sök en lök'),
     buildRollingBanner([
       'BUY MORE',
       'CARE LESS',
