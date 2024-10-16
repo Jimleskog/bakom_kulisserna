@@ -65,7 +65,19 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - images/
-    - google_fonts/
+    
+  fonts:
+    - family: Poppins
+      fonts:
+        # - asset: google_fonts/Poppins-Regular.ttf
+        - asset: assets/google_fonts/Poppins-ExtraBold.ttf
+          weight: 900
+    - family: Roboto
+      fonts:
+        - asset: assets/google_fonts/Roboto-Regular.ttf
+        - asset: assets/google_fonts/Roboto-Bold.ttf
+          weight: 700
+   
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

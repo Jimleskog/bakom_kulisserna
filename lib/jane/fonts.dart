@@ -12,6 +12,11 @@ import 'package:google_fonts/google_fonts.dart';
 // GoogleFonts.notoSans(),
 // GoogleFonts.ptSans(),
 // GoogleFonts.merriweather(),
-final TextStyle appsTextStyle = GoogleFonts.poppins();
+final TextStyle appsTextStyle = GoogleFonts.merriweather();
 
-final String? fontFamily = appsTextStyle.fontFamily;
+const TextStyle appsTextStyle2 = TextStyle(
+  fontFamily:
+      'Poppins', // Replace with the actual font family name from your assets
+);
+
+final String? fontFamily = appsTextStyle2.fontFamily;

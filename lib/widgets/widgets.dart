@@ -127,7 +127,9 @@ Widget buildPictureWholeScreeenWidget(String assetString, String titleText,
                             style: const TextStyle(
                               fontSize: 50,
                               color: colorOnPictureTexts,
-                              fontWeight: FontWeight.w800,
+                              letterSpacing: 1.8,
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w900,
                             )),
                       ),
                     ),
@@ -255,7 +257,8 @@ Widget buildHeader({
 }
 
 Widget buildRollingBanner(List<String> texts, ScrollController controller) {
-  return SizedBox(
+  return Container(
+    color: flashColor,
     height: 30,
     child: ListView.builder(
       scrollDirection: Axis.horizontal,
@@ -270,9 +273,7 @@ Widget buildRollingBanner(List<String> texts, ScrollController controller) {
 }
 
 Widget buildBannerItem(String text) {
-  return Container(
-    margin: EdgeInsets.zero,
-    color: flashColor,
+  return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 20),
     child: Center(
       child: Text(
@@ -299,9 +300,10 @@ Widget buildCategorySection(
         Text(
           title,
           style: const TextStyle(
+            fontStyle: FontStyle.italic,
             fontSize: 50,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+            fontWeight: FontWeight.w900,
+            color: colorOnTextsWithColoredBackground,
           ),
         ),
         const SizedBox(height: 10),
