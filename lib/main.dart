@@ -17,8 +17,8 @@ class BakomKulissernaApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const BakomKulissernaMainPage(),
       theme: ThemeData(
-        fontFamily: fontFamily,
-        textTheme: const TextTheme(),
+        fontFamily: AppFont.fontFamily,
+        // textTheme: AppFont.textTheme,
         elevatedButtonTheme: elevatedButtonThemeData,
       ),
     );

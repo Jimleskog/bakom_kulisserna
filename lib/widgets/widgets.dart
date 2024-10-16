@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../jane/colors.dart';
+import '../jane/fonts.dart';
+import '../main.dart';
 
 Widget buildPage(List<Widget> children) {
   return SingleChildScrollView(
@@ -56,12 +58,12 @@ Widget buildPictureWithButton(String imagePath, String buttonText) {
           left: 0,
           right: 0,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
             child: Align(
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(
                 onPressed: () {},
-                style: ElevatedButton.styleFrom(),
+                // style: ElevatedButton.styleFrom(),
                 child: FittedBox(fit: BoxFit.fitWidth, child: Text(buttonText)),
               ),
             ),
@@ -123,27 +125,20 @@ Widget buildPictureWholeScreeenWidget(String assetString, String titleText,
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
-                        child: Text(titleText,
-                            style: const TextStyle(
-                              fontSize: 50,
-                              color: colorOnPictureTexts,
-                              letterSpacing: 1.8,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w900,
-                            )),
+                        child: Text(
+                          titleText,
+                          style: AppFont.titleLarge.copyWith(
+                              color: colorOnPictureTexts, fontSize: 80),
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
-                        child: Text(
-                          subtitleText,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            color: colorOnPictureTexts,
-                          ),
-                        ),
+                        child: Text(subtitleText,
+                            style: AppFont.pictureBodies
+                                .copyWith(color: colorOnPictureTexts)),
                       ),
                     ),
                     Padding(
@@ -169,40 +164,75 @@ Widget buildHeader({
     padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
     child: LayoutBuilder(
       builder: (context, constraints) {
-        bool isSmallScreen = constraints.maxWidth < 600;
-        return Stack(
-          children: [
-            Row(
+        bool isSmallScreen = constraints.maxWidth < desktopToMobileWidth;
+        bool isSearchActive = false;
+        TextEditingController searchController = TextEditingController();
+
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    // Menu Icon
-                    IconButton(
-                      icon:
-                          const Icon(Icons.menu, size: 30, color: Colors.black),
-                      onPressed: () {
-                        // Logic for Menu button press
-                        print("Menu pressed");
-                      },
-                    ),
-                    if (!isSmallScreen) ...[
-                      const SizedBox(width: 10),
-                      // Search Icon and Text
+                Expanded(
+                  child: Row(
+                    children: [
+                      // Menu Icon
                       IconButton(
-                        icon: const Icon(Icons.search,
+                        icon: const Icon(Icons.menu,
                             size: 30, color: Colors.black),
                         onPressed: () {
-                          // Logic for Search button press
-                          print("Search pressed");
+                          // Logic for Menu button press
+                          print("Menu pressed");
                         },
                       ),
-                      const Text(
-                        'Sök produkter',
-                        style: TextStyle(fontSize: 16, color: Colors.black),
-                      ),
+                      if (!isSmallScreen) ...[
+                        const SizedBox(width: 10),
+                        // Search Icon and Text
+                        if (!isSearchActive)
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.search,
+                                    size: 30, color: Colors.black),
+                                onPressed: () {
+                                  setState(() {
+                                    isSearchActive = true;
+                                  });
+                                },
+                              ),
+                              Text(
+                                'Sök produkter',
+                                style: AppFont.footerBody,
+                              ),
+                            ],
+                          ),
+                        if (isSearchActive)
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 200,
+                                child: TextField(
+                                  controller: searchController,
+                                  decoration: const InputDecoration(
+                                    hintText: 'Sök produkter',
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.close,
+                                    size: 30, color: Colors.black),
+                                onPressed: () {
+                                  setState(() {
+                                    isSearchActive = false;
+                                    searchController.clear();
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
 
                 // Centered Logo
@@ -217,9 +247,10 @@ Widget buildHeader({
                 ),
 
                 // Right-side icons: user, favorites, cart
-                Row(
-                  children: [
-                    if (!isSmallScreen) ...[
+                Expanded(
+                  child: Row(
+                    children: [
+                      const Expanded(child: SizedBox()),
                       IconButton(
                         icon: const Icon(Icons.person_outline,
                             size: 30, color: Colors.grey),
@@ -228,28 +259,30 @@ Widget buildHeader({
                           print("User pressed");
                         },
                       ),
-                      IconButton(
-                        onPressed: () {
-                          // Logic for Favorites button press
-                          print("Favorites pressed");
-                        },
-                        icon: const Icon(Icons.favorite_outline,
-                            size: 30, color: Colors.grey),
-                      ),
+                      if (!isSmallScreen) ...[
+                        IconButton(
+                          onPressed: () {
+                            // Logic for Favorites button press
+                            print("Favorites pressed");
+                          },
+                          icon: const Icon(Icons.favorite_outline,
+                              size: 30, color: Colors.grey),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.shopping_bag_outlined,
+                              size: 30, color: Colors.grey),
+                          onPressed: () {
+                            // Logic for Cart button press
+                            print("Cart pressed");
+                          },
+                        ),
+                      ],
                     ],
-                    IconButton(
-                      icon: const Icon(Icons.shopping_bag_outlined,
-                          size: 30, color: Colors.grey),
-                      onPressed: () {
-                        // Logic for Cart button press
-                        print("Cart pressed");
-                      },
-                    ),
-                  ],
+                  ),
                 ),
               ],
-            ),
-          ],
+            );
+          },
         );
       },
     ),
@@ -259,7 +292,7 @@ Widget buildHeader({
 Widget buildRollingBanner(List<String> texts, ScrollController controller) {
   return Container(
     color: flashColor,
-    height: 30,
+    height: 35,
     child: ListView.builder(
       scrollDirection: Axis.horizontal,
       controller: controller,
@@ -278,11 +311,7 @@ Widget buildBannerItem(String text) {
     child: Center(
       child: Text(
         text,
-        style: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-        ),
+        style: AppFont.bannerTexts,
       ),
     ),
   );
@@ -299,20 +328,22 @@ Widget buildCategorySection(
       children: [
         Text(
           title,
-          style: const TextStyle(
-            fontStyle: FontStyle.italic,
-            fontSize: 50,
-            fontWeight: FontWeight.w900,
+          style: AppFont.titleLarge.copyWith(
             color: colorOnTextsWithColoredBackground,
+            fontStyle: FontStyle.italic,
           ),
         ),
+        // const TextStyle(
+        //   fontStyle: FontStyle.italic,
+        //   fontSize: 50,
+        //   fontWeight: FontWeight.w900,
+        //   color: colorOnTextsWithColoredBackground,
+        // ),
+        // ),
         const SizedBox(height: 10),
         Text(
           description,
-          style: const TextStyle(
-              fontSize: 16,
-              color: colorOnTextsWithColoredBackground,
-              fontWeight: FontWeight.bold),
+          style: AppFont.pictureBodies,
         ),
         const SizedBox(height: 20),
         ElevatedButton(
@@ -351,20 +382,13 @@ Widget buildSubscriptionSection({
               // Subscription Banner
               Text(
                 headerText,
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+                style: AppFont.footerAndLinkHeader,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 10),
               Text(
                 descriptionText,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
+                style: AppFont.footerBody,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
@@ -435,28 +459,14 @@ Widget _buildSection(String sectionHeader, List<String> sectionLinks) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      Text(
-        sectionHeader,
-        style: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-        ),
-      ),
+      Text(sectionHeader, style: AppFont.footerAndLinkHeader),
       const SizedBox(height: 10),
       for (String link in sectionLinks)
         TextButton(
           onPressed: () {
             // Handle link tap
           },
-          child: Text(
-            link,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.black,
-              decoration: TextDecoration.underline,
-            ),
-          ),
+          child: Text(link, style: AppFont.linkTexts),
         ),
     ],
   );

@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../jane/fashionwidgets.dart';
 import '../jane/realitywidgets.dart';
+import '../main.dart';
 import '../widgets/widgets.dart';
 
 class BakomKulissernaMainPage extends StatefulWidget {
@@ -95,6 +95,7 @@ class BakomKulissernaMainPageState extends State<BakomKulissernaMainPage>
 
   @override
   Widget build(BuildContext context) {
+    // print('TextTheme: ${Theme.of(context).textTheme}');
     return Scaffold(
       appBar: AppBar(
         title: const Text(

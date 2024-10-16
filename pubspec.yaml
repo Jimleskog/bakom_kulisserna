@@ -65,13 +65,18 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - images/
+    - assets/google_fonts/
     
   fonts:
     - family: Poppins
       fonts:
-        # - asset: google_fonts/Poppins-Regular.ttf
-        - asset: assets/google_fonts/Poppins-ExtraBold.ttf
-          weight: 900
+        - asset: assets/google_fonts/Poppins-Regular.ttf
+        # - asset: assets/google_fonts/Poppins-ExtraBold.ttf
+        #   weight: 900
+    - family: Poppins-ExtraBold
+      fonts:
+         - asset: assets/google_fonts/Poppins-ExtraBold.ttf
+           weight: 900
     - family: Roboto
       fonts:
         - asset: assets/google_fonts/Roboto-Regular.ttf
