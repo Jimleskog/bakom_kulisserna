@@ -98,18 +98,25 @@ class BakomKulissernaMainPageState extends State<BakomKulissernaMainPage>
     // print('TextTheme: ${Theme.of(context).textTheme}');
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Bakom Kulisserna',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-            letterSpacing: 1.2,
-          ),
+        toolbarHeight: 25,
+        title: Row(
+          children: [
+            Text(
+              showReality ? 'BAKOM KULISSERNA' : 'FRAMFÖR KULISSERNA',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                // letterSpacing: 1.2,
+              ),
+            ),
+          ],
         ),
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
+        backgroundColor: const Color.fromRGBO(222, 219, 213, 100),
+        foregroundColor: Colors.black,
         actions: [
           IconButton(
+            padding: EdgeInsets.zero, // Set padding to zero
+            iconSize: 24, // Increased icon size
             icon: const Icon(Icons.visibility),
             onPressed: toggleReality,
             tooltip: showReality ? 'Switch to Store View' : 'Reveal Reality',
