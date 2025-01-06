@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../jane/colors.dart';
 import '../jane/fonts.dart';
-import '../main.dart';
 
 Widget buildPage(List<Widget> children) {
   return SingleChildScrollView(
@@ -25,7 +24,8 @@ Widget buildsmallContainerBanner(String text) {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(text,
-            style: AppFont.bannerTexts.copyWith(color: smallBannerTextColor)),
+            style: AppFont.bannerTexts
+                .copyWith(color: smallBannerTextColor, fontSize: 14)),
         const Icon(
           Icons.arrow_forward,
           color: smallBannerTextColor,
@@ -35,17 +35,21 @@ Widget buildsmallContainerBanner(String text) {
   );
 }
 
-Widget buildPictureWithButton(String imagePath, String buttonText) {
+Widget buildPictureWithButton(
+  String imagePath,
+  String buttonText,
+  double height,
+) {
   return Padding(
-    padding: const EdgeInsets.all(8.0),
+    padding: const EdgeInsets.all(14.0),
     child: Stack(
       children: [
         SizedBox(
           width: double.infinity,
-          height: 624,
+          height: height,
           child: Image.asset(
             imagePath,
-            fit: BoxFit.cover,
+            fit: BoxFit.fitHeight,
           ),
         ),
         Positioned(
@@ -77,27 +81,34 @@ class PictureData {
 }
 
 List<Widget> _smallPictureRow(
-    {required List<PictureData> data, bool expand = false}) {
+    {required List<PictureData> data,
+    required double height,
+    bool expand = false}) {
   return data.map((data) {
-    final widget =
-        buildPictureWithButton(buildAssetString(data.picture), data.button);
+    final widget = buildPictureWithButton(
+        buildAssetString(data.picture), data.button, height);
     return expand ? Expanded(child: widget) : widget;
   }).toList();
 }
 
 Widget buildPictureRow(BuildContext context, List<PictureData> data) {
   return Padding(
-    padding: const EdgeInsets.all(8.0),
+    padding: const EdgeInsets.all(25.0),
     child: MediaQuery.of(context).size.width < desktopToMobileWidth
-        ? Wrap(children: _smallPictureRow(data: data))
+        ? Wrap(children: _smallPictureRow(data: data, height: 450))
         : Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: _smallPictureRow(data: data, expand: true)),
+            children: _smallPictureRow(data: data, expand: true, height: 650)),
   );
 }
 
-Widget buildPictureWholeScreeenWidget(String assetString, String titleText,
-    String subtitleText, String buttonText) {
+Widget buildPictureWholeScreeenWidget(
+    BuildContext context,
+    String assetString,
+    String titleText,
+    String subtitleText,
+    String buttonText,
+    bool alignCenter) {
   return Stack(
     children: [
       SizedBox(
@@ -110,36 +121,86 @@ Widget buildPictureWholeScreeenWidget(String assetString, String titleText,
                 child: Image.asset(
                   assetString,
                   fit: BoxFit.cover,
+                  // alignment: Alignment.topRight,
                 ),
               ),
-              Center(
+              Align(
+                alignment:
+                    alignCenter ? Alignment.center : Alignment.centerLeft,
                 child: Column(
+                  mainAxisAlignment: alignCenter
+                      ? MainAxisAlignment.center
+                      : MainAxisAlignment.start,
+                  crossAxisAlignment: alignCenter
+                      ? CrossAxisAlignment.center
+                      : CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(
-                          titleText,
-                          style: AppFont.titleLarge.copyWith(
-                              color: colorOnPictureTexts, fontSize: 80),
-                        ),
-                      ),
-                    ),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: alignCenter ? 60 : 20),
+                        child: FittedBox(
+                          alignment: alignCenter
+                              ? Alignment.center
+                              : Alignment.centerLeft,
+                          fit: BoxFit.fitWidth,
+                          child: Text(
+                            titleText,
+                            maxLines: 2,
+                            textAlign: alignCenter
+                                ? TextAlign.center
+                                : TextAlign.start,
+                            style: AppFont.titleLarge.copyWith(
+                                color: colorOnPictureTexts, fontSize: 80),
+                          ),
+                        )),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(subtitleText,
-                            style: AppFont.pictureBodies
-                                .copyWith(color: colorOnPictureTexts)),
-                      ),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: alignCenter ? 80 : 20),
+                      child: MediaQuery.of(context).size.width >
+                              desktopToMobileWidth
+                          ? FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                subtitleText,
+                                style: AppFont.pictureBodies.copyWith(
+                                  color: colorOnPictureTexts,
+                                ),
+                              ),
+                            )
+                          : Text(
+                              subtitleText,
+                              textAlign: alignCenter
+                                  ? TextAlign.center
+                                  : TextAlign.start,
+                              style: AppFont.pictureBodies.copyWith(
+                                  color: colorOnPictureTexts, fontSize: 16),
+                            ),
+                      //  FittedBox(
+                      //   fit: BoxFit.fitWidth,
+                      //   child: Text(subtitleText,
+                      //       style: AppFont.pictureBodies
+                      //           .copyWith(color: colorOnPictureTexts)),
+                      // ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: ElevatedButton(
                         onPressed: () {},
+                        style: alignCenter
+                            ? null
+                            : ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.all(
+                                  20,
+                                ),
+                                backgroundColor:
+                                    Colors.black, // Background color
+                                foregroundColor: Colors.white, // Text color
+                                textStyle: AppFont.buttonTexts,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(2),
+                                ),
+                              ),
                         child: Text(buttonText),
                       ),
                     )
@@ -245,8 +306,8 @@ Widget buildHeader({required String logo, required String searchString}) {
                     children: [
                       const Expanded(child: SizedBox()),
                       IconButton(
-                        icon: const Icon(Icons.person_outline,
-                            size: 30, color: Colors.grey),
+                        icon: const Icon(Icons.shopping_bag_outlined,
+                            size: 30, color: Colors.black),
                         onPressed: () {
                           // Logic for User button press
                           print("User pressed");
@@ -259,11 +320,11 @@ Widget buildHeader({required String logo, required String searchString}) {
                             print("Favorites pressed");
                           },
                           icon: const Icon(Icons.favorite_outline,
-                              size: 30, color: Colors.grey),
+                              size: 30, color: Colors.black),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.shopping_bag_outlined,
-                              size: 30, color: Colors.grey),
+                          icon: const Icon(Icons.person_outline,
+                              size: 30, color: Colors.black),
                           onPressed: () {
                             // Logic for Cart button press
                             print("Cart pressed");
@@ -285,7 +346,7 @@ Widget buildHeader({required String logo, required String searchString}) {
 Widget buildRollingBanner(List<String> texts, ScrollController controller) {
   return Container(
     color: flashColor,
-    height: 35,
+    height: 30,
     child: ListView.builder(
       scrollDirection: Axis.horizontal,
       controller: controller,
@@ -311,7 +372,7 @@ Widget buildBannerItem(String text) {
 }
 
 Widget buildCategorySection(
-    String title, String description, String buttonText) {
+    String title, String description, String buttonText, String imagePath) {
   return Container(
     width: double.infinity,
     color: flashColor,
@@ -319,13 +380,14 @@ Widget buildCategorySection(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          title,
-          style: AppFont.titleLarge.copyWith(
-            color: colorOnTextsWithColoredBackground,
-            fontStyle: FontStyle.italic,
-          ),
-        ),
+        Image.asset(buildAssetString(imagePath)),
+        // Text(
+        //   title,
+        //   style: AppFont.titleLarge.copyWith(
+        //     color: colorOnTextsWithColoredBackground,
+        //     fontStyle: FontStyle.italic,
+        //   ),
+        // ),
         // const TextStyle(
         //   fontStyle: FontStyle.italic,
         //   fontSize: 50,
@@ -336,6 +398,7 @@ Widget buildCategorySection(
         const SizedBox(height: 10),
         Text(
           description,
+          textAlign: TextAlign.center,
           style: AppFont.pictureBodies,
         ),
         const SizedBox(height: 20),
@@ -363,6 +426,7 @@ Widget buildSubscriptionSection({
 }) {
   return LayoutBuilder(builder: (context, constraints) {
     final screenwidth = constraints.maxWidth;
+    final bool isSmallScreen = screenwidth < desktopToMobileWidth;
     return Container(
       color: const Color.fromARGB(255, 202, 190, 186),
       child: Center(
@@ -387,6 +451,16 @@ Widget buildSubscriptionSection({
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(20),
+                  backgroundColor: const Color.fromARGB(255, 202, 190, 186),
+                  foregroundColor: Colors.black,
+                  textStyle: AppFont.buttonTexts,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(2),
+                    side: const BorderSide(color: Colors.black, width: 1),
+                  ),
+                ),
                 child: Text(
                   buttonText,
                 ),
@@ -394,7 +468,7 @@ Widget buildSubscriptionSection({
               const SizedBox(height: 40),
 
               // Sections for Shop, About Us, Legal
-              if (screenwidth < 450)
+              if (isSmallScreen)
                 Column(
                   children: [
                     _buildSection(shopSectionHeader, shopLinks),
@@ -415,31 +489,55 @@ Widget buildSubscriptionSection({
                 ),
               const SizedBox(height: 40),
 
+              isSmallScreen
+                  ? Column(
+                      children: [
+                        Image.asset(buildAssetString('socialmedia.png')),
+                        const SizedBox(height: 20),
+                        Image.asset(
+                          buildAssetString('creatika.png'),
+                          width: 150,
+                        ),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(
+                          buildAssetString('creatika.png'),
+                          width: 150,
+                        ),
+                        Image.asset(buildAssetString('socialmedia.png')),
+                        const SizedBox(width: 150),
+                      ],
+                    ),
+              const SizedBox(height: 40),
+
               // Social Media Icons (Placeholders)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.facebook, color: Colors.black),
-                    onPressed: () {},
-                  ),
-                  const SizedBox(width: 10),
-                  IconButton(
-                    icon: const Icon(Icons.picture_as_pdf, color: Colors.black),
-                    onPressed: () {},
-                  ),
-                  const SizedBox(width: 10),
-                  IconButton(
-                    icon: const Icon(Icons.music_note, color: Colors.black),
-                    onPressed: () {},
-                  ),
-                  const SizedBox(width: 10),
-                  IconButton(
-                    icon: const Icon(Icons.linked_camera, color: Colors.black),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     IconButton(
+              //       icon: const Icon(Icons.facebook, color: Colors.black),
+              //       onPressed: () {},
+              //     ),
+              //     const SizedBox(width: 10),
+              //     IconButton(
+              //       icon: const Icon(Icons.picture_as_pdf, color: Colors.black),
+              //       onPressed: () {},
+              //     ),
+              //     const SizedBox(width: 10),
+              //     IconButton(
+              //       icon: const Icon(Icons.music_note, color: Colors.black),
+              //       onPressed: () {},
+              //     ),
+              //     const SizedBox(width: 10),
+              //     IconButton(
+              //       icon: const Icon(Icons.linked_camera, color: Colors.black),
+              //       onPressed: () {},
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),

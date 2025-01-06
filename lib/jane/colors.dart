@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'fonts.dart';
 
 const Color flashColor = Color.fromRGBO(243, 88, 88, 1);
-const Color smallBannerColor = Color.fromARGB(255, 70, 52, 52);
-const Color smallBannerTextColor = Colors.white;
+const Color smallBannerColor = Color.fromARGB(255, 255, 255, 255);
+const Color smallBannerTextColor = Colors.black;
 const Color colorOnPictureTexts = Color.fromARGB(255, 255, 255, 255);
-const Color colorOnTextsWithColoredBackground = Colors.black;
+const Color colorOnTextsWithColoredBackground = Colors.white;
 
 double desktopToMobileWidth = 600;
 

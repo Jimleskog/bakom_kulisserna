@@ -1,30 +1,36 @@
 import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
+import 'colors.dart';
 
-List<Widget> fashionWidgets(ScrollController controller, BuildContext context) {
+List<Widget> fashionWidgets(
+    ScrollController controller, BuildContext context, bool isMobile) {
   return [
     buildHeader(
-        logo: buildAssetString('logo.png'), searchString: 'Sök produkter'),
+        logo: buildAssetString('eye open.png'), searchString: 'Sök produkter'),
     buildRollingBanner(['SUPER SALE', '50-70%'], controller),
     buildPictureWholeScreeenWidget(
-        buildAssetString('sweater vibes 2.png'),
-        'SWEATER VIBES',
+        context,
+        buildAssetString('542WnRSg.png'),
+        isMobile ? 'SWEATER\nVIBES' : 'SWEATER VIBES',
         'Mjukt, fluffigt och oversize - årets skönaste trend är här',
-        'SHOPPA NU'),
+        'SHOPPA NU',
+        true),
     buildsmallContainerBanner('Köp nu - betala senare'),
     buildPictureRow(context, [
-      PictureData(picture: 'Beauty 3.png', button: 'BEAUTY'),
-      PictureData(picture: 'liza.png', button: 'CNSQNS x Liza'),
-      PictureData(picture: 'stickat.png', button: 'STICKAT'),
+      PictureData(picture: 'U1JWemyA.png', button: 'NEW ARRIVALS'),
+      PictureData(picture: 't6xmCctQ.png', button: 'COLLAB W/ HANNA H'),
+      PictureData(picture: 'ju35G8Tw.png', button: '90s KNITS'),
     ]),
-    buildCategorySection(
-        'SUPER SALE', 'Passa på: 50-70% på allt!', 'SHOPPA REA'),
+    buildCategorySection('SUPER SALE', 'Passa på: 50-70% på allt!',
+        'SHOPPA REA', 'supersale.png'),
     const SizedBox(height: 16),
     buildPictureWholeScreeenWidget(
-        buildAssetString('recycled.png'),
-        'RECYCLED',
+        context,
+        buildAssetString('GwUdNzCA.png'),
+        'CONCIOUS\nCOLLECTION',
         'Vår planet, vårt ansvar. Återvunna fibrer och skarpa siluetter.',
-        'SHOPPA NU'),
+        'SHOPPA NU',
+        false),
     const SizedBox(height: 16),
     buildSubscriptionSection(
       headerText: 'Få 10% rabatt & massa inspo!',
@@ -32,7 +38,7 @@ List<Widget> fashionWidgets(ScrollController controller, BuildContext context) {
           'Missa inga erbjudanden - prenumerera på vårt nyhetsbrev och få 10% rabatt på ditt första köp.',
       buttonText: 'PRENUMERERA',
       shopSectionHeader: 'Shop',
-      shopLinks: ['Nyheter', 'Kläder', 'Beauty'],
+      shopLinks: ['Nyheter', 'Instagram shop', 'Collections'],
       aboutSectionHeader: 'Om oss',
       aboutLinks: ['Hållbarhet', 'Frakt & Retur', 'Influencers'],
       legalSectionHeader: 'Legal',

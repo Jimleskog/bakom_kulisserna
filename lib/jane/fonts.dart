@@ -34,8 +34,8 @@ class AppFont {
       fontSize: 50);
 
   static const TextStyle bannerTexts = TextStyle(
-    fontSize: 20,
-    color: Colors.black,
+    fontSize: 16,
+    color: Colors.white,
   );
 
   static const TextStyle footerAndLinkHeader = TextStyle(
@@ -57,12 +57,13 @@ class AppFont {
   );
 
   static const TextStyle buttonTexts = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
+    fontSize: 16,
+    // fontWeight: FontWeight.bold,
   );
 
   static const TextStyle pictureBodies = TextStyle(
-    fontSize: 20,
+    color: Colors.white,
+    fontSize: 18,
   );
   // static const textTheme = TextTheme(
   //   bodyMedium: bodyMedium,

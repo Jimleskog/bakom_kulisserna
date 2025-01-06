@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../jane/colors.dart';
 import '../jane/fashionwidgets.dart';
 import '../jane/realitywidgets.dart';
 import '../main.dart';
@@ -126,18 +127,21 @@ class BakomKulissernaMainPageState extends State<BakomKulissernaMainPage>
       body: AnimatedBuilder(
         animation: _flipAnimation,
         builder: (context, child) {
+          final isMobile =
+              MediaQuery.of(context).size.width < desktopToMobileWidth;
           return Transform(
             transform: Matrix4.identity()
               ..setEntry(3, 2, 0.001) // Perspective effect
               ..rotateY(pi * _flipAnimation.value),
             alignment: Alignment.center,
             child: _flipAnimation.value < 0.5
-                ? buildPage(fashionWidgets(_bannerController, context))
+                ? buildPage(
+                    fashionWidgets(_bannerController, context, isMobile))
                 : Transform(
                     transform: Matrix4.identity()..rotateY(pi),
                     alignment: Alignment.center,
                     child: buildPage(
-                      buildRealityWidgets(_bannerController, context),
+                      buildRealityWidgets(_bannerController, context, isMobile),
                     )),
           );
         },
