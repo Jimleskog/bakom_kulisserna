@@ -183,6 +183,7 @@ Widget buildPictureWholeScreeenWidget(BuildContext context, String assetString,
                                 color: colorOnPictureTexts, fontSize: 80),
                           ),
                         )),
+                    const SizedBox(height: 20),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: alignCenter ? 80 : 20),
