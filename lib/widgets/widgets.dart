@@ -102,13 +102,9 @@ Widget buildPictureRow(BuildContext context, List<PictureData> data) {
   );
 }
 
-Widget buildPictureWholeScreeenWidget(
-    BuildContext context,
-    String assetString,
-    String titleText,
-    String subtitleText,
-    String buttonText,
-    bool alignCenter) {
+Widget buildPictureWholeScreeenWidget(BuildContext context, String assetString,
+    String titleText, String subtitleText, String buttonText, bool alignCenter,
+    {String? extraText}) {
   return Stack(
     children: [
       SizedBox(
@@ -132,25 +128,54 @@ Widget buildPictureWholeScreeenWidget(
                 alignment:
                     alignCenter ? Alignment.center : Alignment.centerLeft,
                 child: Column(
-                  mainAxisAlignment: alignCenter
-                      ? MainAxisAlignment.center
-                      : MainAxisAlignment.start,
+                  // mainAxisAlignment: alignCenter
+                  //     ? MainAxisAlignment.center
+                  //     : MainAxisAlignment.start,
                   crossAxisAlignment: alignCenter
                       ? CrossAxisAlignment.center
                       : CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    if (extraText != null)
+                      Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: alignCenter ? 60 : 20),
+                          child: FittedBox(
+                            // alignment: alignCenter
+                            //     ? Alignment.center
+                            //     : Alignment.centerLeft,
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              extraText,
+                              textHeightBehavior: const TextHeightBehavior(
+                                  applyHeightToFirstAscent: false,
+                                  applyHeightToLastDescent: false),
+                              // maxLines: 2,
+                              textAlign: alignCenter
+                                  ? TextAlign.center
+                                  : TextAlign.start,
+                              style: AppFont.titleLarge.copyWith(
+                                color: colorOnPictureTexts,
+                                fontSize: 90,
+                                fontWeight: FontWeight.w100,
+                              ),
+                            ),
+                          )),
                     Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: alignCenter ? 60 : 20),
                         child: FittedBox(
-                          alignment: alignCenter
-                              ? Alignment.center
-                              : Alignment.centerLeft,
+                          // alignment: alignCenter
+                          //     ? Alignment.center
+                          //     : Alignment.centerLeft,
                           fit: BoxFit.fitWidth,
                           child: Text(
                             titleText,
-                            maxLines: 2,
+
+                            textHeightBehavior: const TextHeightBehavior(
+                                applyHeightToFirstAscent: false,
+                                applyHeightToLastDescent: false),
+                            // maxLines: 2,
                             textAlign: alignCenter
                                 ? TextAlign.center
                                 : TextAlign.start,

@@ -25,9 +25,10 @@ List<Widget> fashionWidgets(
         'SHOPPA REA', 'supersale.png'),
     const SizedBox(height: 16),
     buildPictureWholeScreeenWidget(
+        extraText: 'CONCIOUS',
         context,
         buildAssetString('GwUdNzCA.png'),
-        'CONCIOUS\nCOLLECTION',
+        'COLLECTION',
         'Vår planet, vårt ansvar. Återvunna fibrer och skarpa siluetter.',
         'SHOPPA NU',
         false),
