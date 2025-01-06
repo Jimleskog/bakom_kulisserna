@@ -120,6 +120,10 @@ Widget buildPictureWholeScreeenWidget(
               Positioned.fill(
                 child: Image.asset(
                   assetString,
+                  alignment:
+                      MediaQuery.of(context).size.width > desktopToMobileWidth
+                          ? Alignment.center
+                          : const Alignment(0.35, 1),
                   fit: BoxFit.cover,
                   // alignment: Alignment.topRight,
                 ),
