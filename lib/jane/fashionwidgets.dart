@@ -15,7 +15,7 @@ List<Widget> fashionWidgets(
         'Mjukt, fluffigt och oversize - årets skönaste trend är här',
         'SHOPPA NU',
         true),
-    buildsmallContainerBanner('Köp nu - betala senare'),
+    buildsmallContainerBanner('Köp nu - Betala senare'),
     buildPictureRow(context, [
       PictureData(picture: 'U1JWemyA.png', button: 'NEW ARRIVALS'),
       PictureData(picture: 't6xmCctQ.png', button: 'COLLAB W/ HANNA H'),
@@ -23,7 +23,7 @@ List<Widget> fashionWidgets(
     ]),
     buildCategorySection('SUPER SALE', 'Passa på: 50-70% på allt!',
         'SHOPPA REA', 'supersale.png'),
-    const SizedBox(height: 16),
+    const SizedBox(height: spaceBetweenRows),
     buildPictureWholeScreeenWidget(
         extraText: 'CONCIOUS',
         context,
@@ -32,7 +32,7 @@ List<Widget> fashionWidgets(
         'Vår planet, vårt ansvar. Återvunna fibrer och skarpa siluetter.',
         'SHOPPA NU',
         false),
-    const SizedBox(height: 16),
+    const SizedBox(height: spaceBetweenRows),
     buildSubscriptionSection(
       headerText: 'Få 10% rabatt & massa inspo!',
       descriptionText:

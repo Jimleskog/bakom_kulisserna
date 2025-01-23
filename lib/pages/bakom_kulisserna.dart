@@ -124,6 +124,7 @@ class BakomKulissernaMainPageState extends State<BakomKulissernaMainPage>
           ),
         ],
       ),
+      backgroundColor: Colors.white,
       body: AnimatedBuilder(
         animation: _flipAnimation,
         builder: (context, child) {

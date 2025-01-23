@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
+import 'colors.dart';
 
 List<Widget> buildRealityWidgets(
     ScrollController controller, BuildContext context, bool isMobile) {
@@ -18,7 +19,7 @@ List<Widget> buildRealityWidgets(
         'Långa arbetsdagar, låg lön, och utan skyddsnät - upplev modeindustrins baksida',
         'TESTA NU',
         true),
-    buildsmallContainerBanner('Köp nu - betala med pengar du inte har'),
+    buildsmallContainerBanner('Köp nu - Betala med pengar du inte har'),
     buildPictureRow(context, [
       PictureData(picture: 'DQrG3n9w.png', button: 'HUR MODE BLIR AVFALL'),
       PictureData(picture: 'QyGzjzSg.png', button: 'INFLUENCER-KULTUR'),
@@ -29,7 +30,7 @@ List<Widget> buildRealityWidgets(
         'Vad är egentligen rea? Och vem betalar priset för låga priser?',
         'VAD ÄR REA',
         'superfail.png'),
-    const SizedBox(height: 16),
+    const SizedBox(height: spaceBetweenRows),
     buildPictureWholeScreeenWidget(
         context,
         buildAssetString('72AAJAWA.png'),
@@ -37,11 +38,11 @@ List<Widget> buildRealityWidgets(
         '"Återvunna fibrer", "mer hållbart", "recycled" - visst låter det bra? Kanske för bra för att vara sant?',
         'SPELA "GREENSWASHER"',
         false),
-    const SizedBox(height: 16),
+    const SizedBox(height: spaceBetweenRows),
     buildSubscriptionSection(
-      headerText: 'Vill du bli ännu svårare att lura?',
+      headerText: 'Vad är grejen med nyhetsbrev?',
       descriptionText:
-          'Prenumera på nyhetsbrevet där du får höra mer om greenwashing-fails, manipulativ marknadsföring och inte-så-hållbara hållbarhetsinitiativ',
+          'Varför får man dem så ofta? Och kan någon se om du har öppnat ett?',
       buttonText: 'JAG VILL VETA',
       shopSectionHeader: 'Lärare',
       shopLinks: ['Begrepp', 'Video & Artiklar', 'Läromaterial'],

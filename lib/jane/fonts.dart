@@ -53,11 +53,11 @@ class AppFont {
   static const TextStyle linkTexts = TextStyle(
     fontSize: 15,
     color: Colors.black,
-    decoration: TextDecoration.underline,
+    // decoration: TextDecoration.underline,
   );
 
   static const TextStyle buttonTexts = TextStyle(
-    fontSize: 16,
+    fontSize: 22,
     // fontWeight: FontWeight.bold,
   );
 

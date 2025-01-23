@@ -18,17 +18,24 @@ String buildAssetString(String assetString) {
 
 Widget buildsmallContainerBanner(String text) {
   return Container(
-    color: smallBannerColor,
-    height: 30,
+    decoration: const BoxDecoration(
+      color: smallBannerColor,
+      border: Border(
+        top: BorderSide(color: Colors.black, width: 1),
+        bottom: BorderSide(color: Colors.black, width: 1),
+      ),
+    ),
+    height: 40,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(text,
             style: AppFont.bannerTexts
-                .copyWith(color: smallBannerTextColor, fontSize: 14)),
+                .copyWith(color: smallBannerTextColor, fontSize: 18)),
         const Icon(
-          Icons.arrow_forward,
+          Icons.arrow_right,
           color: smallBannerTextColor,
+          size: 40,
         )
       ],
     ),
@@ -44,12 +51,19 @@ Widget buildPictureWithButton(
     padding: const EdgeInsets.all(14.0),
     child: Stack(
       children: [
-        SizedBox(
+        Container(
           width: double.infinity,
           height: height,
-          child: Image.asset(
-            imagePath,
-            fit: BoxFit.fitHeight,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(imagePath),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 1),
+            ),
           ),
         ),
         Positioned(
@@ -57,12 +71,18 @@ Widget buildPictureWithButton(
           left: 0,
           right: 0,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
+            padding: const EdgeInsets.all(
+              40,
+            ),
             child: Align(
               alignment: Alignment.bottomCenter,
               child: ElevatedButton(
                 onPressed: () {},
-                // style: ElevatedButton.styleFrom(),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(28),
+                  minimumSize:
+                      const Size(double.infinity, 50), // Expand button width
+                ),
                 child: FittedBox(fit: BoxFit.fitWidth, child: Text(buttonText)),
               ),
             ),
@@ -93,18 +113,20 @@ List<Widget> _smallPictureRow(
 
 Widget buildPictureRow(BuildContext context, List<PictureData> data) {
   return Padding(
-    padding: const EdgeInsets.all(25.0),
+    padding: const EdgeInsets.fromLTRB(25, spaceBetweenRows - picturePadding,
+        25, spaceBetweenRows - picturePadding + 20),
     child: MediaQuery.of(context).size.width < desktopToMobileWidth
-        ? Wrap(children: _smallPictureRow(data: data, height: 450))
+        ? Wrap(children: _smallPictureRow(data: data, height: 500))
         : Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: _smallPictureRow(data: data, expand: true, height: 650)),
+            children: _smallPictureRow(data: data, expand: true, height: 750)),
   );
 }
 
 Widget buildPictureWholeScreeenWidget(BuildContext context, String assetString,
     String titleText, String subtitleText, String buttonText, bool alignCenter,
     {String? extraText}) {
+  bool isDesktop = MediaQuery.of(context).size.width > desktopToMobileWidth;
   return Stack(
     children: [
       SizedBox(
@@ -117,9 +139,7 @@ Widget buildPictureWholeScreeenWidget(BuildContext context, String assetString,
                 child: Image.asset(
                   assetString,
                   alignment:
-                      MediaQuery.of(context).size.width > desktopToMobileWidth
-                          ? Alignment.center
-                          : const Alignment(0.35, 1),
+                      isDesktop ? Alignment.center : const Alignment(0.35, 1),
                   fit: BoxFit.cover,
                   // alignment: Alignment.topRight,
                 ),
@@ -139,7 +159,7 @@ Widget buildPictureWholeScreeenWidget(BuildContext context, String assetString,
                     if (extraText != null)
                       Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: alignCenter ? 60 : 20),
+                              horizontal: isDesktop ? 60 : 20),
                           child: FittedBox(
                             // alignment: alignCenter
                             //     ? Alignment.center
@@ -163,7 +183,7 @@ Widget buildPictureWholeScreeenWidget(BuildContext context, String assetString,
                           )),
                     Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: alignCenter ? 60 : 20),
+                            horizontal: isDesktop ? 60 : 20),
                         child: FittedBox(
                           // alignment: alignCenter
                           //     ? Alignment.center
@@ -186,7 +206,11 @@ Widget buildPictureWholeScreeenWidget(BuildContext context, String assetString,
                     const SizedBox(height: 20),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: alignCenter ? 80 : 20),
+                          horizontal: alignCenter
+                              ? 80
+                              : isDesktop
+                                  ? 60
+                                  : 20),
                       child: MediaQuery.of(context).size.width >
                               desktopToMobileWidth
                           ? FittedBox(
@@ -214,15 +238,16 @@ Widget buildPictureWholeScreeenWidget(BuildContext context, String assetString,
                       // ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(15),
+                      padding: EdgeInsets.fromLTRB(
+                          isDesktop ? 60 : 20, 60, isDesktop ? 60 : 20, 60),
                       child: ElevatedButton(
                         onPressed: () {},
                         style: alignCenter
                             ? null
                             : ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.all(
-                                  20,
-                                ),
+                                // padding: const EdgeInsets.all(
+                                //   20,
+                                // ),
                                 backgroundColor:
                                     Colors.black, // Background color
                                 foregroundColor: Colors.white, // Text color
@@ -376,7 +401,7 @@ Widget buildHeader({required String logo, required String searchString}) {
 Widget buildRollingBanner(List<String> texts, ScrollController controller) {
   return Container(
     color: flashColor,
-    height: 30,
+    height: 35,
     child: ListView.builder(
       scrollDirection: Axis.horizontal,
       controller: controller,
@@ -479,20 +504,23 @@ Widget buildSubscriptionSection({
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(20),
-                  backgroundColor: const Color.fromARGB(255, 202, 190, 186),
-                  foregroundColor: Colors.black,
-                  textStyle: AppFont.buttonTexts,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(2),
-                    side: const BorderSide(color: Colors.black, width: 1),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    // padding: const EdgeInsets.all(20),
+                    backgroundColor: const Color.fromARGB(255, 202, 190, 186),
+                    foregroundColor: Colors.black,
+                    textStyle: AppFont.buttonTexts,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(2),
+                      side: const BorderSide(color: Colors.black, width: 1),
+                    ),
                   ),
-                ),
-                child: Text(
-                  buttonText,
+                  child: Text(
+                    buttonText,
+                  ),
                 ),
               ),
               const SizedBox(height: 40),
@@ -524,18 +552,36 @@ Widget buildSubscriptionSection({
                       children: [
                         Image.asset(buildAssetString('socialmedia.png')),
                         const SizedBox(height: 20),
-                        Image.asset(
-                          buildAssetString('creatika.png'),
-                          width: 150,
+                        ElevatedButton(
+                          onPressed: () {
+                            // Handle Creatika logo button press
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                          ),
+                          child: Image.asset(
+                            buildAssetString('creatika.png'),
+                            width: 150,
+                          ),
                         ),
                       ],
                     )
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.asset(
-                          buildAssetString('creatika.png'),
-                          width: 150,
+                        ElevatedButton(
+                          onPressed: () {
+                            // Handle Creatika logo button press
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                          ),
+                          child: Image.asset(
+                            buildAssetString('creatika.png'),
+                            width: 150,
+                          ),
                         ),
                         Image.asset(buildAssetString('socialmedia.png')),
                         const SizedBox(width: 150),
@@ -581,7 +627,7 @@ Widget _buildSection(String sectionHeader, List<String> sectionLinks) {
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       Text(sectionHeader, style: AppFont.footerAndLinkHeader),
-      const SizedBox(height: 10),
+      const SizedBox(height: 16),
       for (String link in sectionLinks)
         TextButton(
           onPressed: () {
