@@ -29,7 +29,7 @@ class AppFont {
 
   static const TextStyle titleLarge = TextStyle(
       fontFamily: 'Poppins-ExtraBold',
-      fontWeight: FontWeight.w900,
+      fontWeight: FontWeight.bold,
       letterSpacing: 5,
       fontSize: 50);
 
