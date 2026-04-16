@@ -104,88 +104,91 @@ class BakomKulissernaMainPageState extends State<BakomKulissernaMainPage>
         return Stack(
           children: [
             Positioned(
-              right: 16,
-              bottom: 80,
-              child: Material(
-                elevation: 8,
-                borderRadius: BorderRadius.circular(12),
-                child: Container(
-                  width: 320,
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.black, width: 1.5),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 8),
-                          IconButton(
-                            icon: const Icon(Icons.close, size: 20),
-                            onPressed: () => Navigator.of(context).pop(),
-                            padding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      RichText(
-                        text: TextSpan(
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                            height: 1.5,
-                            fontFamily: 'Roboto',
-                          ),
+                right: 16,
+                bottom: 80,
+                child: Material(
+                  elevation: 8,
+                  borderRadius: BorderRadius.circular(2),
+                  child: Container(
+                    width: 320,
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(2),
+                      // border: Border.all(color: Colors.black, width: 1.5),
+                    ),
+                    child: Stack(
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const TextSpan(
-                              text: 'Bakom Kulisserna ',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            const TextSpan(
-                              text:
-                                  'är ett interaktivt utbildningskoncept som synliggör klädkonsumtionens baksidor för unga.\n\n',
-                            ),
-                            const TextSpan(
-                              text:
-                                  'Är du intresserad av att använda, sprida eller vidareutveckla konceptet?\n\n',
-                            ),
-                            const TextSpan(
-                              text: 'Mejla gärna: ',
-                            ),
-                            TextSpan(
-                              text: 'studio@createika.com',
-                              style: const TextStyle(
-                                color: Colors.blue,
-                                decoration: TextDecoration.underline,
-                                fontWeight: FontWeight.w500,
+                            RichText(
+                              text: TextSpan(
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  height: 1.5,
+                                  fontFamily: 'Roboto',
+                                ),
+                                children: [
+                                  const TextSpan(
+                                    text: 'Bakom Kulisserna ',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  const TextSpan(
+                                    text:
+                                        'är ett interaktivt utbildningskoncept som synliggör klädkonsumtionens baksidor för unga.\n\n',
+                                  ),
+                                  const TextSpan(
+                                    text:
+                                        'Är du intresserad av att använda, sprida eller vidareutveckla konceptet?\n\n',
+                                  ),
+                                  const TextSpan(
+                                    text: 'Mejla gärna: ',
+                                  ),
+                                  TextSpan(
+                                    text: 'studio@createika.com',
+                                    style: const TextStyle(
+                                      color: Colors.blue,
+                                      decoration: TextDecoration.underline,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () async {
+                                        try {
+                                          final emailUri = Uri.parse(
+                                              'mailto:studio@createika.com?subject=Bakom%20Kulisserna');
+                                          await launchUrl(emailUri,
+                                              mode: LaunchMode.platformDefault);
+                                        } catch (e) {
+                                          debugPrint(
+                                              'Could not launch email: $e');
+                                        }
+                                      },
+                                  ),
+                                ],
                               ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () async {
-                                  try {
-                                    final emailUri = Uri.parse(
-                                        'mailto:studio@createika.com?subject=Bakom%20Kulisserna');
-                                    await launchUrl(emailUri,
-                                        mode: LaunchMode.platformDefault);
-                                  } catch (e) {
-                                    debugPrint('Could not launch email: $e');
-                                  }
-                                },
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                        Positioned(
+                          top: 4,
+                          right: 4,
+                          child: IconButton(
+                            icon: const Icon(Icons.close,
+                                size: 20, color: Colors.black54),
+                            onPressed: () => Navigator.of(context).pop(),
+                            padding: const EdgeInsets.all(4),
+                            constraints: const BoxConstraints(),
+                            tooltip: 'Close',
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
-            ),
+                ))
           ],
         );
       },
@@ -226,6 +229,9 @@ class BakomKulissernaMainPageState extends State<BakomKulissernaMainPage>
       floatingActionButton: showReality
           ? FloatingActionButton(
               onPressed: _showInfoPopup,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(2),
+              ),
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
               elevation: 4,
