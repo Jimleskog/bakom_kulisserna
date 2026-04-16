@@ -171,7 +171,8 @@ class BakomKulissernaMainPageState extends State<BakomKulissernaMainPage>
                                   try {
                                     final emailUri = Uri.parse(
                                         'mailto:studio@createika.com?subject=Bakom%20Kulisserna');
-                                    await launchUrl(emailUri, mode: LaunchMode.platformDefault);
+                                    await launchUrl(emailUri,
+                                        mode: LaunchMode.platformDefault);
                                   } catch (e) {
                                     debugPrint('Could not launch email: $e');
                                   }
