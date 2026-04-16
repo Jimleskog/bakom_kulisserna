@@ -3,40 +3,49 @@
 
 name: Deploy to Firebase Hosting on PR
 
-on: 
+on:
   pull_request:
     branches:
       - main
-
 
 permissions:
   checks: write
   contents: read
   pull-requests: write
 
-
 jobs:
   build_and_preview:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
 
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.3' # Specify your Flutter version
+          flutter-version: "3.27.1"
+          channel: "stable"
+          cache: true
+
+      - name: Cache Pub packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            ${{ env.PUB_CACHE }}
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
 
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build project
-        run: flutter build web
+      - name: Build Flutter web
+        run: flutter build web --release
 
-      - name: Deploy to Firebase Hosting
+      - name: Deploy to Firebase Hosting Preview
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}

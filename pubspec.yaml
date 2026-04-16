@@ -47,8 +47,20 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+  # For information on the generic Dart part of this file, see the
+  # following page: https://dart.dev/tools/pub/pubspec
+
+  # To Generate App Icons for ios and android
+  # flutter clean, flutter pub get & dart pub run flutter_launcher_icons
+
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  web:
+    generate: true
+    image_path: "images/eye closed 252.png"
+    background_color: "#FFFFFF"
+    theme_color: "#FFFFFF"
 
 # The following section is specific to Flutter packages.
 flutter:
